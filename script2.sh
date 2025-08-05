@@ -1,10 +1,12 @@
 #!/bin/bash
 
-if pgrep -x nginx >/dev/null; then
+if pgrep -a nginx >/dev/null; then
     echo "nginx"
-    DIRS=$(find /etc/nginx -type f \( -name '*.crt' -o -name '*.key' -o -name '*.pem' -o -iname '*bundle*' \) 2>/dev/null | xargs -r dirname | sort -u)
+    DIRS=$(sudo find /etc/nginx -type f \( -name '*.crt' -o -name '*.key' -o -name '*.pem' -o -iname '*bundle*' \) 2>/dev/null | xargs -r dirname | sort -u)
+	echo "$DIRS"
     DIR_CONT=$(echo "$DIRS" | wc -l)
-    
+	echo "$DIR_CONT"
+    	
     if [ "$DIR_CONT" -eq 0 ]; then
         echo "Nenhum diretório com certificados encontrado."
         exit 1
@@ -38,10 +40,12 @@ if pgrep -x nginx >/dev/null; then
         fi
     fi
 
-elif pgrep -x httpd >/dev/null || pgrep -x apache2 >/dev/null; then
+elif pgrep -a httpd >/dev/null || pgrep -a apache2 >/dev/null; then
     echo "apache"
-    DIRS=$(find /etc/httpd /etc/apache2 -type f \( -name '*.crt' -o -name '*.key' -o -name '*.pem' -o -iname '*bundle*' \) 2>/dev/null | xargs -r dirname | sort -u)
+    DIRS=$(sudo find /etc/httpd /etc/apache2 -type f \( -name '*.crt' -o -name '*.key' -o -name '*.pem' -o -iname '*bundle*' \) 2>/dev/null | xargs -r dirname | sort -u)
+	echo "$DIRS"
     DIR_CONT=$(echo "$DIRS" | wc -l)
+	echo "$DIR_CONT"
 
     if [ "$DIR_CONT" -eq 0 ]; then
         echo "Nenhum diretório com certificados encontrado."
