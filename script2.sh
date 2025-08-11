@@ -18,10 +18,10 @@ if pgrep -a nginx >/dev/null; then
     else
         echo "Diretório encontrado: $DIRS"
         cd "$DIRS" || exit 1
-        for arq in *.crt *.key *bundle*; do
+        for arq in *.crt *.key *.br.pem; do
             [ -f "$arq" ] && mv "$arq" "$arq.bak2"
             echo "backup realizado"
-            novo=$(find /tmp/novo_cert -maxdepth 1 -type f \( -iname '*.crt' -o -iname '*.key' -o -iname '*bundle*' \) | head -n 1)
+            novo=$(find /tmp/novo_cert -maxdepth 1 -type f \( -iname '*.crt' -o -iname '*.key' -o -iname '*.br.pem' \) | head -n 1)
             if [ -n "$novo" ]; then
                 echo "Copiando novo arquivo $novo para $DIRS como  $arq"
                 cp "$novo" "$arq"
@@ -61,7 +61,7 @@ elif pgrep -a httpd >/dev/null || pgrep -a apache2 >/dev/null; then
         for arq in *.crt *.key *bundle*; do
             [ -f "$arq" ] && mv "$arq" "$arq.bak2"
             echo "backup realizado"
-            novo=$(find /tmp/novo_cert -maxdepth 1 -type f \( -iname '*.crt' -o -iname '*.key' -o -iname '*bundle*' \) | head -n 1)
+            novo=$(find /tmp/novo_cert -maxdepth 1 -type f \( -iname '*.crt' -o -iname '*.key' \) | head -n 1)
             if [ -n "$novo" ]; then
                 echo "Copiando novo arquivo $novo para $DIRS como  $arq"
                 cp "$novo" "$arq"
