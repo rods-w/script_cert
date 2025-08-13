@@ -30,7 +30,7 @@ if pgrep -a nginx >/dev/null; then
                 echo "Nenhum novo arquivo disponível para substituir $arq"
             fi
         done
-	for arq in *.key; do
+	    for arq in *.key; do
             [ -f "$arq" ] && mv "$arq" "$arq.bak2"
             echo "Backup realizado"
             novo=$(find /tmp/novo_cert -maxdepth 1 -type f \( -iname '*.key' \) | head -n 1)
@@ -95,7 +95,7 @@ elif pgrep -a httpd >/dev/null || pgrep -a apache2 >/dev/null; then
                 echo "Nenhum novo arquivo disponível para substituir $arq"
             fi
         done
-	for arq in *.key; do
+	    for arq in *.key; do
             [ -f "$arq" ] && mv "$arq" "$arq.bak2"
             echo "backup realizado"
             novo=$(find /tmp/novo_cert -maxdepth 1 -type f \( -iname '*.key' \) | head -n 1)
